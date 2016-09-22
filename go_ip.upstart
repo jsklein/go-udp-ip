@@ -1,0 +1,32 @@
+! /bin/sh
+### BEGIN INIT INFO
+# Provides: go_ip
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: go_ip
+# Description: This file starts and stops go_ip server
+# 
+### END INIT INFO
+
+DOWNLOAD_DIR=/usr/local/bin
+
+case "$1" in
+ start)
+   nohup $DOWNLOAD_DIR/go_ip_linux_port_1024 >/dev/null 2>&1 &
+   ;;
+ stop)
+   killall go_ip_linux_port_1024
+   sleep 2
+   ;;
+ restart)
+   killall go_ip_linux_port_1024
+   sleep 5
+   nohup $DOWNLOAD_DIR/go_ip_linux_port_1024 >/dev/null 2>&1 &
+   ;;
+ *)
+   echo "Usage: go_ip {start|stop|restart}" >&2
+   exit 3
+   ;;
+esac
